@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = ['G','PG','PG-13','NC-17','R'] 
     @list = params[:ratings] || session[:ratings] || {}
     active = params[:active] || session[:active]
     if(params[:active] == 'title')
@@ -16,8 +17,17 @@ class MoviesController < ApplicationController
     if(params[:active] == 'release_date')
         @release_date='hilite'
     end
-    sort_column=params[:sort] || params[:active]
-    @movies = Movie.order(sort_column).all
+    if params[:active] != session[:active]
+      session[:active] = active
+      redirect_to :active => active, :ratings=> @list and return
+    end
+    if params[:ratings] != session[:ratings]  and @list != {}
+      session[:active]=  active
+      session[:ratings] = @list
+      redirect_to :active => active , :ratings => @list and return
+    end
+    
+    @movies = Movie.find_all_by_rating(@list.keys,{:order => params[:active]})
   end
 
   def new
