@@ -7,6 +7,8 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @list = params[:ratings] || session[:ratings] || {}
+    active = params[:active] || session[:active]
     if(params[:active] == 'title')
       @title_header='hilite'
 #        @movies = Movie.find(:all,:order=>'title')
