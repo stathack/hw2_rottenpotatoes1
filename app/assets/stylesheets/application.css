@@ -12,7 +12,7 @@ div#main {
 }
 a {
   background: transparent;
-  color: maroon;
+  color: black;
   text-decoration: underline;
   font-weight: bold;
 }
@@ -58,4 +58,7 @@ form label {
   line-height: 25px;
   font-weight: bold;
   color: maroon;
+}
+table#movies th.hilite {
+  background-color: yellow;
 }
